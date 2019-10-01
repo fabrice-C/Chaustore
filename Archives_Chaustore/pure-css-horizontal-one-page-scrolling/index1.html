@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pure CSS Horizontal One Page Scrolling Demo</title>
+<link href="reset.css" rel="stylesheet" type="text/css">
+<style class="cp-pen-styles">
+.wrapper {
+  background: #ecf0f1;
+  color: #fff;
+  display: block;
+  height: 100%;
+  overflow-x: hidden;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.wrapper header {
+  background: rgba(255, 255, 255, 0.5);
+  color: #222;
+  font-size: 1rem;
+  position: relative;
+  text-align: center;
+  z-index: 900;
+}
+
+.wrapper header label {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.667em;
+  font-weight: bold;
+  line-height: 3rem;
+  padding: 0 1em;
+}
+@media (min-width: 34.6875em) {
+
+.wrapper header label { font-size: 1em; }
+}
+@media (min-width: 81.25em) {
+
+.wrapper header label { font-size: 1.15em; }
+}
+
+.wrapper header label:hover { background: #fff; }
+
+.wrapper header label + label { margin-left: .25em; }
+@media (min-width: 31.25em) {
+
+.wrapper header label + label { margin-left: 0em; }
+}
+@media (min-width: 41.25em) {
+
+.wrapper header label + label { margin-left: 2em; }
+}
+
+.wrapper header label span { display: none; }
+@media (min-width: 25em) {
+
+.wrapper header label span { display: inline-block; }
+}
+
+.wrapper h1 { margin: 1em 0; }
+
+input {
+  left: 0;
+  position: absolute;
+  top: -1000%;
+}
+
+.section {
+  color: #fff;
+  display: inline-block;
+  font-size: 1rem;
+  height: 100%;
+  left: 100%;
+  max-width: 100%;
+  padding: 3em 1em;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  vertical-align: top;
+  -webkit-transition: left 0s .75s;
+  transition: left 0s .75s;
+  width: 100%;
+  z-index: 10;
+}
+@media (min-width: 28.75em) {
+
+.section { padding: 3em; }
+}
+@media (min-width: 43.75em) {
+
+.section { padding: 3em; }
+}
+@media (min-width: 87.5em) {
+
+.section { padding: 3em 6em; }
+}
+@media (max-height: 26.875em) {
+
+.section { height: auto; }
+}
+
+.section-one {
+  background: #3b2644 url("Simplon_logo_op30.png");/* #263844*/  
+  background-size: cover;
+}
+
+.section-two {
+  background: #263844 url("Simplon_logo_op30.png");/* #354858  */
+  background-size: cover;
+}
+
+.section-three {
+  background: #284426 url("Simplon_logo_op30.png");/* #DDE6E8  #263844 */
+  background-size: cover;
+}
+
+.section-four {
+  background: #ce0033 url("Simplon_logo_op30.png");/* #92CD89  */
+  background-size: cover;
+}
+
+.section p {
+  text-align: left;
+  text-shadow: 1px 1px #000;
+}
+@media (min-width: 25em) {
+
+/*.section p {
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+}*/
+}
+
+.section h1,
+.section p {
+  opacity: 0;
+  top: 3em;
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: all 0.75s cubic-bezier(0, 1.2, 0.89, 1.3);
+  transition: all 0.75s cubic-bezier(0, 1.2, 0.89, 1.3);
+}
+
+input:checked + .section {
+  left: 0;
+  -webkit-transition: left 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: left 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-transition: left 0.75s cubic-bezier(0, 1.2, 0.89, 1.3);
+  transition: left 0.75s cubic-bezier(0, 1.2, 0.89, 1.3);
+  z-index: 100;
+}
+
+input:checked + .section h1,
+input:checked + .section p {
+  opacity: 1;
+  top: 0;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1) 0.9s;
+  transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1) 0.9s;
+  -webkit-transition: all 0.75s cubic-bezier(0, 1.2, 0.89, 1.3) 0.9s;
+  transition: all 0.75s cubic-bezier(0, 1.2, 0.89, 1.3) 0.9s;
+}
+html,
+body {
+  box-sizing: border-box;
+  font-size: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+h1, h2, h3 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+}
+@media (min-width: 25em) {
+  h1, h2, h3 {
+    font-weight: 700;
+  }
+}
+
+h2, h3 {
+  margin: 1.414em 0 0.5em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 1.5em;
+  font-size: 7.6vw;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+@media (min-width: 31.25em) {
+  h1 {
+    font-size: 2.25em;
+  }
+}
+@media (min-width: 50em) {
+  h1 {
+    font-size: 3.375em;
+  }
+}
+
+h2 {
+  font-size: 1em;
+}
+@media (min-width: 31.25em) {
+  h2 {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 50em) {
+  h2 {
+    font-size: 2.25em;
+  }
+}
+
+h3 {
+  font-size: 0.667em;
+}
+@media (min-width: 31.25em) {
+  h3 {
+    font-size: 1em;
+  }
+}
+@media (min-width: 50em) {
+  h3 {
+    font-size: 1.5em;
+  }
+}
+
+p, ul {
+  font-size: 0.667em;
+  line-height: 1.4;
+  margin-bottom: 0.75em;
+}
+@media (min-width: 31.25em) {
+  p, ul {
+    font-size: 1em;
+  }
+}
+@media (min-width: 81.25em) {
+  p, ul {
+    font-size: 1.15em;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+  <header>
+    <label for="section-1-trigger" ><span>Section</span> Visualisation</label>
+    <label for="section-2-trigger" ><span>Section</span> Creation</label>
+    <label for="section-3-trigger" ><span>Section</span> Modification</label>
+    <label for="section-4-trigger" ><span>Section</span> Suppression</label>
+  </header>
+  <input id="section-1-trigger" type="radio" name="sections" tabindex="1" checked>
+  <section class="section section-one">
+    <h1>Category</h1>
+    <h2>Visualisation</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam. Sed semper, nisl sodales hendrerit porta, justo orci interdum turpis, id iaculis sem ipsum eget turpis. Suspendisse sit amet nibh arcu. Suspendisse pharetra lectus non est tempus euismod. Vivamus dapibus euismod neque, et mattis tellus tincidunt interdum. In hac habitasse platea dictumst. Mauris vitae ante vitae ligula ultrices venenatis at sit amet nibh. Mauris ipsum mauris, pretium ut ipsum nec, sagittis porta erat. Donec varius, lacus nec vulputate tristique, augue erat imperdiet diam, a tempus justo ante at urna. Ut nec eros turpis.</p>
+  </section>
+  <input id="section-2-trigger" type="radio" name="sections" tabindex="2">
+  <section class="section section-two">
+    <h1>Category</h1>
+    <h2>Création</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam. Sed semper, nisl sodales hendrerit porta, justo orci interdum turpis, id iaculis sem ipsum eget turpis. Suspendisse sit amet nibh arcu. Suspendisse pharetra lectus non est tempus euismod. Vivamus dapibus euismod neque, et mattis tellus tincidunt interdum. In hac habitasse platea dictumst. Mauris vitae ante vitae ligula ultrices venenatis at sit amet nibh. Mauris ipsum mauris, pretium ut ipsum nec, sagittis porta erat. Donec varius, lacus nec vulputate tristique, augue erat imperdiet diam, a tempus justo ante at urna. Ut nec eros turpis.</p>
+  </section>
+  <input id="section-3-trigger" type="radio" name="sections" tabindex="3">
+  <section class="section section-three">
+    <h1>Category</h1>
+    <h2>Modification</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam. Sed semper, nisl sodales hendrerit porta, justo orci interdum turpis, id iaculis sem ipsum eget turpis. Suspendisse sit amet nibh arcu. Suspendisse pharetra lectus non est tempus euismod. Vivamus dapibus euismod neque, et mattis tellus tincidunt interdum. In hac habitasse platea dictumst. Mauris vitae ante vitae ligula ultrices venenatis at sit amet nibh. Mauris ipsum mauris, pretium ut ipsum nec, sagittis porta erat. Donec varius, lacus nec vulputate tristique, augue erat imperdiet diam, a tempus justo ante at urna. Ut nec eros turpis.</p>
+  </section>
+  <input id="section-4-trigger" type="radio" name="sections" tabindex="4">
+  <section class="section section-four">
+    <h1>Category</h1>
+    <h2>Suppression</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam. Sed semper, nisl sodales hendrerit porta, justo orci interdum turpis, id iaculis sem ipsum eget turpis. Suspendisse sit amet nibh arcu. Suspendisse pharetra lectus non est tempus euismod. Vivamus dapibus euismod neque, et mattis tellus tincidunt interdum. In hac habitasse platea dictumst. Mauris vitae ante vitae ligula ultrices venenatis at sit amet nibh. Mauris ipsum mauris, pretium ut ipsum nec, sagittis porta erat. Donec varius, lacus nec vulputate tristique, augue erat imperdiet diam, a tempus justo ante at urna. Ut nec eros turpis.</p>
+  </section>
+</div>
+</body>
+</html>

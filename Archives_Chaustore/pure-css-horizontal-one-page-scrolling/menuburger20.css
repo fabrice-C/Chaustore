@@ -1,0 +1,221 @@
+:root {	
+	--primary-color: rgba(139, 26, 13, 0.75);/*rouge foncé*/
+	--secondary-color:rgba(101, 101, 101, 0.75);
+	--overlay-color:rgba(51, 26, 24, 0.85);
+}
+
+body {
+	margin:0;
+	padding:0;
+	background-color: #fff;/*rouge clair : CE0031 - rouge foncé : var(--primary-color);*/
+	font-family: 'Poppins', sans-serif;/*identique au site Simplon Brief*/
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+a /* ajout pour lien dans li*/
+{
+  color:#fff;
+  text-decoration:none;
+}
+
+a:hover /* ajout pour lien dans li déplacer vers la droite et en gras*/
+{
+  font-weight: bold;
+  transform: translate(10px);
+  color:rgba(255, 255, 255, 0.75);
+}
+
+a:active {
+	transform: translate(-10px);
+	color:#CE0031;
+}
+
+
+.material-icons /* ajout pour lien dans li icones */
+{
+  font-size:24px;
+  margin-right:12px;
+  vertical-align:text-bottom;
+}
+
+.langue /* ajout pour lien langues */
+{
+  color: white;/*var(--primary-color);*/
+  font-size:15px;
+  font-style: italic;
+  line-height:30px;
+  margin-left: 20px;
+  margin-top: 10px;
+  padding:0 10px;
+  text-transform:lowercase;
+}
+
+.page {
+	width:100vw;
+	height:100vh;
+	display:flex;
+	justify-content: left;
+	align-items:left;
+	position:relative;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.content {
+	width:100%;
+	text-align: justify;
+	max-width: 1024px;
+}
+
+h1 {
+	color: rgba(139, 26, 13, 0.75);/*var(--overlay-color);*/
+	font-size: 42px;
+	font-weight: 900;
+	text-align: center;
+}
+
+h1 span {
+	color: var(--overlay-color); /*light */
+	font-weight: 300;
+}
+
+p{
+	color: var(--overlay-color); /*light */
+}
+
+.menu-wrapper {
+	position: fixed;
+	top:15px;
+	right: 2px; 
+	/*left:15px;*/
+	width: 60px;
+	height: 60px;
+	box-sizing: border-box;
+}
+
+.menu-wrapper .toggle {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+
+	top:0;
+	right:0;
+	left:0;
+	bottom: 0;
+
+	z-index: 999;
+	cursor: pointer;
+	opacity: 0;
+}
+
+.menu-wrapper .hamburger {
+	width: 50px;
+	height: 50px;
+
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+	bottom: 0;
+
+	z-index: 998;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	box-sizing: border-box;
+	padding:10px;
+	transition: all 0.3s ease-in-out;
+}
+
+.menu-wrapper .hamburger .bar { /*barres du menu*/
+	position: relative;
+	width: 100%;
+	height:3px;
+	background:var(--overlay-color); /*light */
+	z-index: 5;
+	transition: all 0.2s linear;
+}
+
+.menu-wrapper .hamburger .bar::before,
+.menu-wrapper .hamburger .bar::after {
+	content: '';
+	position: absolute;
+	top:-10px;
+	width: 100%;
+	height: 3px;
+	background:var(--overlay-color);
+	transition: all 0.2s linear;
+}
+
+.menu-wrapper .hamburger .bar::after {
+	top:10px;
+}
+
+.menu-wrapper .toggle:hover + .hamburger {
+	transform: rotate(-270deg);
+	background:rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
+}
+
+.menu-wrapper .toggle:checked + .hamburger {
+	transform:rotate(45deg);
+}
+
+.menu-wrapper .toggle:checked:hover + .hamburger {
+	transform: rotate(135deg);
+}
+
+.menu-wrapper .toggle:checked + .hamburger .bar::before,
+.menu-wrapper .toggle:checked + .hamburger .bar::after {
+	top:0;
+	transform: rotate(90deg);
+}
+
+.menu {
+	position: fixed;
+	top:0;
+	left:0;
+
+	opacity: 0;
+	width:0;
+	height:0;
+	overflow: hidden;
+	background:rgba(150, 22, 22, 0.75); 
+	z-index: 1;
+	transition: all 0.3s ease;
+	display:flex;
+	justify-content: left;
+	align-content: left;
+}
+
+.menu ul li {
+	color:var(--secondary-color);
+	font-size: 20px;
+	list-style-type: none;
+	text-align: left;
+	line-height:3rem;
+	margin:0;
+	cursor: pointer;
+	box-sizing: 5px;
+	border-bottom: 2px solid transparent;
+}
+
+.menu ul li:hover {
+	color:var(--primary-color);
+	transform: translate(10px);
+	border-bottom: 2px solid #ce0031;/* var(--overlay-color);*/
+}
+
+.menu-wrapper .toggle:checked + .hamburger + .menu {
+	opacity: 1;
+	width:100vw;
+	height:100vh;
+}
