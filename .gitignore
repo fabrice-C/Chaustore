@@ -1,0 +1,7 @@
+﻿#Don't track content of these files
+ChaustoreV2-explications.ods
+*.ods
+*.odt
+*.zip
+connectFC.php
+gitignore.txt
