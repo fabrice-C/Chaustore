@@ -33,9 +33,9 @@
           <ul>
             <li class="dir"><a href="#">Produits</a>
               <ul>
-                <li><a href="#">par marque</a></li>
-                <li><a href="#">par categorie</a></li>
-                <li><a href="#">par couleur</a></li>
+                <li><a href="#">par marque et produits</a></li>
+                <li><a href="#">par categorie et produits</a></li>
+                <li><a href="#">par couleur et produits</a></li>
               </ul>
             </li>
             <li class="dir"><a href="#">Marques</a>
