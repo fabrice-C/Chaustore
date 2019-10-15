@@ -6,8 +6,9 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <!--<meta http-equiv="refresh" content="100">  -->
 
-      <title>Chaustore - Back-office</title>
+      <title>Chaustore - Back-office - Produits</title>
       <link rel="stylesheet" type="text/css" href="styles2.css"/>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <h1>Product</h1>
@@ -60,7 +61,7 @@
                   }
 
                   // on ferme la connexion à la base
-                  mysqli_close($conn);
+                  require_once('disconnect.php');
 
                   $ok = "<BR/>Félicitations ! <BR/>Les données 'Product' sont à jour.";
                   echo '<p>'.$ok.'</p>';
@@ -152,7 +153,7 @@
                             }
 
                             // on ferme la connexion à la base
-                            mysqli_close($conn);
+                            require('disconnect.php');
 
                             $ok = "<BR/>Félicitations ! <BR/>Les données 'Product' sont à jour.";
                             //header("refresh: 40;url=Form_product.php");
@@ -261,7 +262,7 @@
                             }
 
                             // on ferme la connexion à la base
-                            mysqli_close($conn);
+                            require('disconnect.php');
 
                             $ok = "Félicitations ! Les données 'Product' sont à jour.";
                             //header("refresh: 50;url=Form_product.php");

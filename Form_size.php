@@ -6,8 +6,9 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <!--<meta http-equiv="refresh" content="100">  -->
 
-      <title>Chaustore - Back-office</title>
+      <title>Chaustore - Back-office - Tailles</title>
       <link rel="stylesheet" type="text/css" href="styles2.css"/>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <h1>Size</h1>
@@ -32,16 +33,7 @@
 
                   $ok = "";
                   //connexion à la base de données PHP_Form_Client
-                  $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
-
-                  if (!$conn) {
-                      die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                              . mysqli_connect_error());
-                  }
-
-                  mysqli_set_charset($conn,'utf8');
-
-                  //echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
+                  require_once('connectFC.php');
 
                   $ok="Voici le détail des tailles (Size) :<BR/>";
                   echo $ok;
@@ -60,7 +52,7 @@
                   }
 
                   // on ferme la connexion à la base
-                  mysqli_close($conn);
+                  require_once('disconnect.php');
 
                   $ok = "<BR/>Félicitations ! <BR/>Les données 'Size' sont à jour.";
                   echo '<p>'.$ok.'</p>';
@@ -86,21 +78,8 @@
                       }
 
                       if (empty($error)) {
-                            //connexion à la base de données PHP_Form_Client
-                            $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
-
-                            if (!$conn) {
-                                die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                                        . mysqli_connect_error());
-                            }
-
-                            //echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
-
-                            //affichage des tables de la base PHP_Form_Client
-                            mysqli_set_charset($conn,'utf8');
-
-                            //récupérer les valeurs des champs du formulaire
-                            //var_dump($_POST['SizeC']);
+                        //connexion à la base de données PHP_Form_Client
+                        require('connectFC.php');
 
                             //ajout données réelles de la table size
                             $size=$_POST['SizeC'];
@@ -152,7 +131,7 @@
                             }
 
                             // on ferme la connexion à la base
-                            mysqli_close($conn);
+                            require('disconnect.php');
 
                             $ok = "<BR/>Félicitations ! <BR/>Les données 'Size' sont à jour.";
                             //header("refresh: 40;url=Form_size.php");
@@ -193,16 +172,7 @@
 
                       if (empty($error)) {
                             //connexion à la base de données PHP_Form_Client
-                            $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
-
-                            if (!$conn) {
-                                die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                                        . mysqli_connect_error());
-                            }
-
-                            echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
-
-                            mysqli_set_charset($conn,'utf8');
+                            require('connectFC.php');
 
                             //récupérer les valeurs des champs du formulaire
                             var_dump($_POST['SizeM']);var_dump($_POST['SizeNew']);
@@ -261,7 +231,7 @@
                             }
 
                             // on ferme la connexion à la base
-                            mysqli_close($conn);
+                            require('disconnect.php');
 
                             $ok = "Félicitations ! Les données 'Size' sont à jour.";
                             //header("refresh: 50;url=Form_size.php");

@@ -15,14 +15,14 @@
 
         <li><a href="#">Mises à jour Tables</a>
           <ul>
-            <li><a href="Form_stock.php" target="_blank" title="Stock">Stock</a></li>
+            <li><a href="Form_stock.php" title="Stock">Stock</a></li>
 
-            <li class="dir"><a href="Form_product.php" target="_blank" title="Produits">Produits</a>
+            <li class="dir"><a href="Form_product.php" title="Produits">Produits</a>
               <ul>
-                <li><a href="Form_brand.php" target="_blank" title="Marque">Brand</a></li>
-                <li><a href="Form_category.php" target="_blank" title="Catégorie">Category</a></li>
-                <li><a href="Form_color.php" target="_blank" title="Couleur">Color</a></li>
-                <li><a href="Form_size.php" target="_blank" title="Pointure">Size</a></li>
+                <li><a href="Form_brand.php" title="Marque">Brand</a></li>
+                <li><a href="Form_category.php" title="Catégorie">Category</a></li>
+                <li><a href="Form_color.php" title="Couleur">Color</a></li>
+                <li><a href="Form_size.php" title="Pointure">Size</a></li>
               </ul>
             </li>
 

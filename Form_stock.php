@@ -1,402 +1,311 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <!--<meta http-equiv="refresh" content="100">  -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--<meta http-equiv="refresh" content="100">  -->
 
-      <title>Chaustore - Back-office</title>
-      <link rel="stylesheet" type="text/css" href="styles2.css"/>
-    </head>
-    <body>
-        <h1>Stock</h1>
-        <nav>
-          <ul>
-            <li><a href="#1" title="Visualisation"><i class="material-icons">tv</i> Visualisation</a></li>
-            <li><a href="#2" title="Création"><i class="material-icons">add_circle_outline</i> Création</a></li>
-            <li><a href="#3" title="Modification"><i class="material-icons">create</i> Modification</a></li>
-            <li><a href="#4" title="Suppression"><i class="material-icons">remove_circle_outline</i> Suppression</a></li>
-          </ul>
-        </nav>
+  <title>Chaustore - Back-office - Stock</title>
+  <link rel="stylesheet" type="text/css" href="styles2.css"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <h1>Stock</h1>
+  <nav>
+    <ul>
+      <li><a href="#1" title="Visualisation"><i class="material-icons">tv</i> Visualisation</a></li>
+      <li><a href="#2" title="Création"><i class="material-icons">add_circle_outline</i> Création</a></li>
+    </ul>
+  </nav>
 
-        <!-- Visualisation -->
-        <div class="conteneur">
-          <p id="1" class="resultats">Résultats Visualisation</p>
-          <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Visualisation données table Category <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
+  <!-- Visualisation -->
+  <div class="conteneur">
+    <h2 id="1" class="resultats">Visualisation Stock</h2>
+    <!-- <a href="index.php"><input type="button" value="Accueil" /></a>  -->
 
-              <br/><br/>
+    <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a> Récapitulatif des stocks <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
+    <br/><input type="button" onclick='window.location.reload(false)' value="..: Réactualiser le tableau :.."/>
+    <br/><br/><br/>
+    <table width="76%">
+      <thead>
+        <tr>
+          <th width="5%"># Prod</th>
+          <th width="40%">Produit</th>
+          <th width="5%">idTaille</th>
+          <th width="15%">Taille</th>
+          <th width="5%">Qté</th>
+          <th width="5%">MAJ</th>
+          <th width="5%">Suppr</th>
+        </tr>
+      </thead>
+    </table>
 
-              <p>
-              <?php
+    <div class="overflowTest">
+      <table class="t01" width="80%">
 
-                  $ok = "";
-                  //connexion à la base de données PHP_Form_Client
-                  $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
+      <?php
 
-                  if (!$conn) {
-                      die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                              . mysqli_connect_error());
-                  }
+      $ok = "";
+      //connexion à la base de données PHP_Form_Client
+      require_once('connectFC.php');
 
-                  mysqli_set_charset($conn,'utf8');
+      //$ok="Voici le détail des stocks (Stock) :<BR/>";
+      //echo $ok;
+      //echo "<br>";
 
-                  //echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
+      //affichage données réelles de la table stock
+      $sql = 'select p.id as ID_Prod, p.name as Produit, si.id as idTaille, si.name as Taille, st.stock as Qt_Stock from product as p inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id order by Produit, Taille;';
+      //$req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
 
-                  $ok="Voici le détail des stocks (Stock) :<BR/>";
-                  echo $ok;
-                  echo "<br>";
+      if($result = mysqli_query($conn, $sql)){
+        if(mysqli_num_rows($result) > 0){
 
-                  //affichage données réelles de la table stock
-                  $sql = 'select id, name from stock order by id;';
-                  $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
-                  //Résultats pour affichage des données stock
-                  while ($result = mysqli_fetch_row($req)) {
-                  	//var_dump($result);
-                    for ($i=0; $i < count($result) ; $i++) {
-                      echo ($result[$i]." ");
-                    }
-                    echo "<br>";
-                  }
+            echo "<tbody>";
+            while($row = mysqli_fetch_array($result)){
+              echo "<tr>";
+              echo "<td width=\"5%\">" . $row['ID_Prod'] . "</td>";
+              echo "<td width=\"40%\">" . $row['Produit'] . "</td>";
+              echo "<td width=\"5%\">" . $row['idTaille'] . "</td>";
+              echo "<td width=\"15%\">" . $row['Taille'] . "</td>";
+              echo "<td width=\"5%\">" . $row['Qt_Stock'] . "</td>";
+              echo "<td width=\"5%\"><a href=\"confirm.php?ID_Prod=" . $row['ID_Prod'] . "&idTaille=" . $row['idTaille'] . "&Qt_Stock=" . $row['Qt_Stock'] . "\"><i class=\"material-icons\">create</i></a></td>";
+              echo "<td width=\"5%\"><i class=\"material-icons\">delete_outline</i></td>";
+              echo "</tr>";
+            }
+            echo "</tbody>";
 
-                  // on ferme la connexion à la base
-                  mysqli_close($conn);
+          echo "</table>";
+          // Free result set
+          mysqli_free_result($result);
+        } else{
+          echo "<p class='lead'><em>No records were found.</em></p>";
+        }
+      } else{
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+      }
 
-                  $ok = "<BR/>Félicitations ! <BR/>Les données 'Stock' sont à jour.";
-                  echo '<p>'.$ok.'</p>';
-                  //header("refresh: 10;url=Form_stock.php");
-              ?>
-            </p>
-        </div>
+      // on ferme la connexion à la base
+      require_once('disconnect.php');
 
-        <!-- Creation -->
-        <div class="conteneur">
-          <p id="2" class="resultats">Résultats Création</p>
-          <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Création données table Category <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
+      $ok = "<BR/>Félicitations ! <BR/>Les données 'Stock' sont à jour.";
+      echo '<p>'.$ok.'</p>';
+      //header("refresh: 10;url=Form_stock.php");
+      ?>
+    </div>
+  </div>
 
-              <br/><br/>
+<!-- Creation -->
+<div class="conteneur">
+  <h2 id="2" class="resultats">Création de stock produit - pointure</h2>
+  <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Création Stock Produit - Pointure <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
 
-              <p>
-              <?php
-                  $error = "";
-                  $ok = "";
-                  if (!empty($_POST)) {
-                    if (empty($_POST['StockC'])) {
-                      $error .= "le stock est obligatoire.<br/>";
-                      }
+  <br/><br/>
 
-                      if (empty($error)) {
-                            //connexion à la base de données PHP_Form_Client
-                            $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
-
-                            if (!$conn) {
-                                die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                                        . mysqli_connect_error());
-                            }
-
-                            //echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
-
-                            //affichage des tables de la base PHP_Form_Client
-                            mysqli_set_charset($conn,'utf8');
-
-                            //récupérer les valeurs des champs du formulaire
-                            //var_dump($_POST['StockC']);
-
-                            //ajout données réelles de la table stock
-                            $stock=$_POST['StockC'];
-                            $ok="";
-                            //test pour existence du stock
-                            $sql = 'select name from stock where name="'.$stock.'";';
-                            //echo "<br>";var_dump($sql);echo "<br>";
-                            $req = mysqli_query($conn, $sql);
-                            $result = mysqli_fetch_row($req);
-                            //var_dump($result);//var_dump($result);
-                            if (is_null($result)) {
-                                $countResult=0;
-                                //echo "<br>";
-                                $ok="Le stock doit être créée ...<BR/>";
-                                echo $ok;
-                                //ajout données réelles de la table client
-                                $sql = "INSERT INTO `stock` VALUES (null, '".$stock."');";
-                                //echo "<br>";var_dump($sql);echo "<br>";
-                                $req = mysqli_query($conn, $sql);
-
-                                if ($req) {
-                                  $ok="<BR/>Vos informations ont été envoyées : <br/>Le stock ".$stock." a été créée.<BR/>";
-                                }
-                                else {
-                                  $ok="<BR/>Attention ! quelque chose s'est mal passé...";
-                                }
-                                echo ($ok);
-                            }
-                            else {
-                                $countResult=1;
-                                echo "<br>";
-                                $ok="Le stock est déjà créée ! <BR/>Voici le détail des stocks :<BR/>";
-                                echo $ok;
-
-                            }
-
-                            echo "<br>";
-
-                            //affichage données réelles de la table stock
-                            $sql = 'select id, name from stock order by id;';
-                            $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
-                            //Résultats pour affichage des données stock
-                            while ($result = mysqli_fetch_row($req)) {
-                            	//var_dump($result);
-                              for ($i=0; $i < count($result) ; $i++) {
-                                echo ($result[$i]." ");
-                              }
-                              echo "<br>";
-                            }
-
-                            // on ferme la connexion à la base
-                            mysqli_close($conn);
-
-                            $ok = "<BR/>Félicitations ! <BR/>Les données 'Stock' sont à jour.";
-                            //header("refresh: 40;url=Form_stock.php");
-                      }
-                  }
-                  echo '<p>'.$error.$ok.'</p>';
-              ?>
-              <?php if (empty($_POST) || !empty($error)) { ?>
-              <form method="POST">
-                  <label>
-                    Stocks
-                      <input type="text" name="StockC" value="<?php if (!empty($_POST['StockC'])) { echo $_POST['StockC']; } ?>">
-                  </label>
-                  <input type="submit" value="Send">
-              </form>
-              <?php } ?>
-            </p>
-        </div>
+  <p>
+    <?php
+    $error = "";
+    $ok = "";
+    if (!empty($_POST)) {
+      if (empty($_POST['ID_Produit'])) {
+        $error .= "le numéro du produit est obligatoire.<br/>";
+      }
+      if (empty($_POST['ID_Taille'])) {
+        $error .= "le numéro de la pointure est obligatoire.<br/>";
+      }
+      if (is_null($_POST['Qt_Stock'])) {
+        $error .= "la quantité en stock doit être indiquée, même si elle est égale à zéro '0'.<br/>";
+      }
 
 
-        <!-- Modification -->
-        <div class="conteneur">
-          <p id="3" class="resultats">Résultats Modification</p>
-          <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Modification données table Category <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
-              <br/><br/>
+      if (empty($error)) {
+        //connexion à la base de données PHP_Form_Client
+        require('connectFC.php');
 
-              <p>
-              <?php
-                  $error = "";
-                  $ok = "";
-                  if (!empty($_POST)) {
-                    if (empty($_POST['StockM'])) {
-                      $error .= "le stock à modifier est obligatoire.<br/>";
-                      }
-                    if (empty($_POST['StockNew'])) {
-                      $error .= "le nouveau stock est obligatoire.<br/>";
-                      }
+        //ajout données réelles de la table stock
+        $ProdID=$_POST['ID_Produit'];
+        $TailleID=$_POST['ID_Taille'];
+        $StockQ=$_POST['Qt_Stock'];
+        $ok="";
+        //test pour existence du stock
+        $sql = 'select product_id, size_id, stock from stock where product_id='.$ProdID.' AND size_id='.$TailleID.';';
+        echo "<br>";var_dump($sql);echo "<br>";
+        $req = mysqli_query($conn, $sql);
+        $result = mysqli_fetch_row($req);
+        var_dump($result);//var_dump($result);
+        if (is_null($result)) {
+          $countResult=0;
+          //echo "<br>";
+          $ok="Le stock doit être créée ...<BR/>";
+          echo $ok;
+          //ajout données réelles de la table client
+          $sql = 'INSERT INTO `stock` VALUES ('.$ProdID.', '.$TailleID.', '.$StockQ.');';
+          echo "<br>";var_dump($sql);echo "<br>";
+          $req = mysqli_query($conn, $sql);
 
-                      if (empty($error)) {
-                            //connexion à la base de données PHP_Form_Client
-                            $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
+          if ($req) {
+            $ok="<BR/>Bravo ! vos informations ont été envoyées. <br/><br/>Le stock du produit N° ".$prod_id." à modifier avec la pointure ".$taille_id." a été mise à jour. La nouvelle quantité est égale à : ".$stockNew.";<BR/>";
+          }
+          else {
+            $ok="<BR/>Attention ! quelque chose s'est mal passé...";
+          }
+          echo ($ok);
+        }
+        else {
+          $countResult=1;
+          echo "<br>";
+          $ok="Le stock est déjà créée ! <BR/>Voici le détail des stocks :<BR/>";
+          echo $ok;
 
-                            if (!$conn) {
-                                die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                                        . mysqli_connect_error());
-                            }
+        }
 
-                            echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
+        echo "<br>";
 
-                            mysqli_set_charset($conn,'utf8');
+        //affichage données réelles de la table stock
+        $sql = 'select product_id, size_id, stock from stock where product_id='.$ProdID.' AND size_id='.$TailleID.';';
+        $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
+        //Résultats pour affichage des données stock
+        while ($result = mysqli_fetch_row($req)) {
+          //var_dump($result);
+          for ($i=0; $i < count($result) ; $i++) {
+            echo ($result[$i]." ");
+          }
+          echo "<br>";
+        }
 
-                            //récupérer les valeurs des champs du formulaire
-                            var_dump($_POST['StockM']);var_dump($_POST['StockNew']);
+        // on ferme la connexion à la base
+        require('disconnect.php');
 
-                            //Mise à jour données réelles de la table stock
-                            $stock=$_POST['StockM'];
-                            $stockNew=$_POST['StockNew'];
-                            var_dump($stock);echo "<br>";var_dump($stockNew);
-                            $ok="";
-                            //test pour existence du stock
-                            $sql = 'select name from stock where name="'.$stock.'";';
-                            echo "<br>";var_dump($sql);echo "<br>";
-                            $req = mysqli_query($conn, $sql);
-                            $result = mysqli_fetch_row($req);
-                            //var_dump($result);//var_dump($result);
+        $ok = "<BR/>Félicitations ! <BR/>Les données 'Stock' sont à jour.";
+        //header("refresh: 40;url=Form_stock.php");
+      }
+    }
+    echo '<p>'.$error.$ok.'</p>';
+    ?>
+    <?php if (empty($_POST) || !empty($error)) { ?>
+      <div class="form">
+        <form method="POST">
+          <label>
+            ID_Produit
+            <input type="text" name="ID_Produit" value="<?php if (!empty($_POST['ID_Produit'])) { echo $_POST['ID_Produit']; } ?>">
+          </label>
+          <BR/><BR/>
+          <label>
+            ID_Taille
+            <input type="text" name="ID_Taille" value="<?php if (!empty($_POST['ID_Taille'])) { echo $_POST['ID_Taille']; } ?>">
+          </label>
+          <BR/><BR/>
+          <label>
+            Qt_Stock
+            <input type="text" name="Qt_Stock" Default=1 value="<?php if (!empty($_POST['Qt_Stock'])) { echo $_POST['Qt_Stock']; } ?>">
+          </label>
+          <BR/><BR/>
+          <input type="submit" value=". . . : : : V a l i d e r : : : . . .">
+        </form>
+      </div>
+    <?php } ?>
+  </p>
+</div>
 
-                            if (is_null($result)) {
-                                $countResult=0;
-                                echo "<br>";
-                                $ok="Le stock à modifier ".$stock." n'existe pas ...<BR/>Veuillez vérifier la saisie.";
-                                echo $ok;
-                            }
-                            else {
-                                $countResult=1;
-                                //Mise à jour données réelles de la table client
-                                //UPDATE liste_proprietaire SET telephone="06-55-99-10-00" WHERE nom="Benoît";
-                                $sql = "UPDATE `stock` SET name= '".$stockNew."' WHERE name='".$stock."';";
-                                echo "<br>";var_dump($sql);echo "<br>";
-                                $req = mysqli_query($conn, $sql);
+<!-- Suppression -->
+<div class="conteneur">
+  <p id="4" class="resultats">Résultats Suppression</p>
 
-                                if ($req) {
-                                  $ok="Félicitations ! vos informations ont été envoyées : <br/> Le stock ".$stock." a été mise à jour.";
-                                }
-                                else {
-                                  $ok="Attention ! quelque chose s'est mal passé...";
-                                }
-                                echo ($ok);
-                                echo "<br>";
-                                $ok="Voici le détail des stocks mises à jour :<BR/>";
-                                echo $ok;
+  <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Suppression données table Stock <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
 
-                            }
+  <br/><br/>
+  <h2>Les stocks ne peuvent pas être supprimés !</h2>
+  <h3>Cette donnée est indispensable pour la gestion des produits et des tailles !</h3>
+  <h4>Attention ! Certains produits et/ou tailles peuvent être en RUPTURE de stock !</h4>
+  <h5>Vérifier les produits et les tailles avant de supprimer un stock.</h5>
+  <p>
+    <?php
+    $error = "";
+    $ok = "";
+    if (!empty($_POST)) {
+      if (empty($_POST['StockS'])) {
+        $error .= "le stock est obligatoire.<br/>";
+      }
 
-                            echo "<br>";
+      if (empty($error)) {
+        //connexion à la base de données PHP_Form_Client
+        require('connectFC.php');
 
-                            //affichage données réelles de la table stock
-                            $sql = 'select id, name from stock order by id;';
-                            $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
-                            //Résultats pour affichage des données stock
-                            while ($result = mysqli_fetch_row($req)) {
-                            	//var_dump($result);
-                              for ($i=0; $i < count($result) ; $i++) {
-                                echo ($result[$i]." ");
-                              }
-                              echo "<br>";
-                            }
+        //suppression données réelles de la table stock
+        $stock=$_POST['StockS'];
+        var_dump($stock);
+        $ok="";
+        //test pour existence du stock
+        $sql = 'select name from stock where name="'.$stock.'";';
+        echo "<br>";var_dump($sql);echo "<br>";
+        $req = mysqli_query($conn, $sql);
+        $result = mysqli_fetch_row($req);
+        //var_dump($result);//var_dump($result);
+        if (is_null($result)) {
+          $countResult=0;
+          echo "<br>";
+          $ok="Le stock ".$stock." n'existe pas ...<BR/>";
+          echo $ok;
+        }
+        else {
+          $countResult=1;
+          echo "<br>";var_dump($stock);echo "<br>";
+          $ok="Vous allez supprimer le stock '".$stock."'.<BR/>";
+          echo $ok;
+          //suppression données de la table client
+          //DELETE FROM `utilisateur` WHERE `id` = 1
 
-                            // on ferme la connexion à la base
-                            mysqli_close($conn);
+          $sql = 'DELETE FROM `stock` WHERE `name` = "'.$stock.'";';
+          echo "<br>";var_dump($sql);echo "<br>";
+          $req = mysqli_query($conn, $sql);
 
-                            $ok = "Félicitations ! Les données 'Stock' sont à jour.";
-                            //header("refresh: 50;url=Form_stock.php");
-                      }
-                  }
-                  echo '<p>'.$error.$ok.'</p>';
-              ?>
-              <?php if (empty($_POST) || !empty($error)) { ?>
-              <form method="POST">
-                  <label>
-                    Stock à modifier
-                    <input type="text" name="StockM" placeholder="Stock à modifier (nom)" value="<?php if (!empty($_POST['StockM'])) { echo $_POST['StockM']; } ?>">
-                  </label>
-                  <label>
-                    Nouveau stock
-                    <input type="text" name="StockNew" placeholder="Nouveau stock" value="<?php if (!empty($_POST['StockNew'])) { echo $_POST['StockNew']; } ?>">
-                  </label>
-                  <input type="submit" value="Send">
-              </form>
-              <?php } ?>
-            </p>
-        </div>
+          if ($req) {
+            $ok="Félicitations ! <br/> Le stock ".$stock." a été supprimée.";
+          }
+          else {
+            $ok="Attention ! quelque chose s'est mal passé...";
+          }
+          echo ($ok);
 
+          echo "<br>";
+          $ok="Voici le détail des stocks mises à jour :<BR/>";
+          echo $ok;
 
-        <!-- Suppression -->
-        <div class="conteneur">
-          <p id="4" class="resultats">Résultats Suppression</p>
+        }
 
-          <p><a href="index.php" target="_self" title="Accueil"><i class="material-icons">home</i></a>  Suppression données table Category <a href="#top" title="Haut de la page"><img src="images/chevron-up-box-outline24.png" alt="Haut de la page"/></a></p>
+        echo "<br>";
 
-              <br/><br/>
-              <h2>Les stocks ne peuvent pas être supprimés !</h2>
-              <h3>Cette donnée est indispensable pour la gestion des produits et des tailles !</h3>
-              <h4>Attention ! Certains produits et/ou tailles peuvent être en RUPTURE de stock !</h4>
-              <h5>Vérifier les produits et les tailles avant de supprimer un stock.</h5>
-              <p>
-              <?php
-                  $error = "";
-                  $ok = "";
-                  if (!empty($_POST)) {
-                    if (empty($_POST['StockS'])) {
-                      $error .= "le stock est obligatoire.<br/>";
-                      }
+        //affichage données réelles de la table stock
+        $sql = 'select id, name from stock order by id;';
+        $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
+        //Résultats pour affichage des données stock
+        while ($result = mysqli_fetch_row($req)) {
+          //var_dump($result);
+          for ($i=0; $i < count($result) ; $i++) {
+            echo ($result[$i]." ");
+          }
+          echo "<br>";
+        }
 
-                      if (empty($error)) {
-                            //connexion à la base de données PHP_Form_Client
-                            $conn = mysqli_connect('164.132.110.233', 'simplon', 'xCIwyTKo3)?(31;*', 'simplon_chaustore');
+        // on ferme la connexion à la base
+        require('disconnect.php');
 
-                            if (!$conn) {
-                                die('Erreur de connexion (' . mysqli_connect_errno() . ') '
-                                        . mysqli_connect_error());
-                            }
-
-                            echo 'Succès... ' . mysqli_get_host_info($conn) . "\n";
-
-                            mysqli_set_charset($conn,'utf8');
-
-                            //récupérer les valeurs des champs du formulaire
-                            var_dump($_POST['StockS']);
-
-                            //suppression données réelles de la table stock
-                            $stock=$_POST['StockS'];
-                            var_dump($stock);
-                            $ok="";
-                            //test pour existence du stock
-                            $sql = 'select name from stock where name="'.$stock.'";';
-                            echo "<br>";var_dump($sql);echo "<br>";
-                            $req = mysqli_query($conn, $sql);
-                            $result = mysqli_fetch_row($req);
-                            //var_dump($result);//var_dump($result);
-                            if (is_null($result)) {
-                                $countResult=0;
-                                echo "<br>";
-                                $ok="Le stock ".$stock." n'existe pas ...<BR/>";
-                                echo $ok;
-                            }
-                            else {
-                                $countResult=1;
-                                echo "<br>";var_dump($stock);echo "<br>";
-                                $ok="Vous allez supprimer le stock '".$stock."'.<BR/>";
-                                echo $ok;
-                                //suppression données de la table client
-                                //DELETE FROM `utilisateur` WHERE `id` = 1
-
-                                $sql = 'DELETE FROM `stock` WHERE `name` = "'.$stock.'";';
-                                echo "<br>";var_dump($sql);echo "<br>";
-                                $req = mysqli_query($conn, $sql);
-
-                                if ($req) {
-                                  $ok="Félicitations ! <br/> Le stock ".$stock." a été supprimée.";
-                                }
-                                else {
-                                  $ok="Attention ! quelque chose s'est mal passé...";
-                                }
-                                echo ($ok);
-
-                                echo "<br>";
-                                $ok="Voici le détail des stocks mises à jour :<BR/>";
-                                echo $ok;
-
-                            }
-
-                            echo "<br>";
-
-                            //affichage données réelles de la table stock
-                            $sql = 'select id, name from stock order by id;';
-                            $req = mysqli_query($conn, $sql); //, MYSQLI_USE_RESULT
-                            //Résultats pour affichage des données stock
-                            while ($result = mysqli_fetch_row($req)) {
-                            	//var_dump($result);
-                              for ($i=0; $i < count($result) ; $i++) {
-                                echo ($result[$i]." ");
-                              }
-                              echo "<br>";
-                            }
-
-                            // on ferme la connexion à la base
-                            mysqli_close($conn);
-
-                            $ok = "Félicitations ! Les données 'Stock' sont à jour.";
-                            //header("refresh: 50;url=Form_stock.php");
-                      }
-                  }
-                  echo '<p>'.$error.$ok.'</p>';
-              ?>
-              <?php if (empty($_POST) || !empty($error)) { ?>
-              <form method="POST">
-                  <label>
-                    Stocks
-                      <input type="text" name="StockS" value="<?php if (!empty($_POST['StockS'])) { echo $_POST['StockS']; } ?>">
-                  </label>
-                  <input type="submit" value="Send">
-              </form>
-              <?php } ?>
-            </p>
-        </div>
-    </body>
+        $ok = "Félicitations ! Les données 'Stock' sont à jour.";
+        //header("refresh: 50;url=Form_stock.php");
+      }
+    }
+    echo '<p>'.$error.$ok.'</p>';
+    ?>
+    <?php if (empty($_POST) || !empty($error)) { ?>
+      <form method="POST">
+        <label>
+          Stocks
+          <input type="text" name="StockS" value="<?php if (!empty($_POST['StockS'])) { echo $_POST['StockS']; } ?>">
+        </label>
+        <input type="submit" value="Send">
+      </form>
+    <?php } ?>
+  </p>
+</div>
+</body>
 </html>
