@@ -1,10 +1,102 @@
+/* Selection de toutes les couleurs avec ou sans produits (name) avec affichage de la couleur, du nom de produit si existe sinon null,
+table principale Product et liées Color, right join
+classée par couleur et produit */
+
+select co.name as Couleur, p.name as Produit from product as p right join color as co on color_id=co.id order by Couleur, Produit;
+
+/*
++------------+----------------------------------------------+
+| Couleur    | Produit                                      |
++------------+----------------------------------------------+
+| Beige      | Suttino Beige                                |
+| Blanc      | All Star Dainty Canvas Ox W Blanc Optical    |
+| Blanc      | Chuck Taylor All Star Hi M Blanc Optical     |
+| Blanc      | Stan Smith Blanc Vert                        |
+| Blanc      | Superstar Blanc Noir                         |
+| Blanc      | Superstar W Blanc Noir                       |
+| Blanc      | Wmns Air Huarache Run White White            |
+| Blanc      | Wmns Classic Cortez Leather Blanc Rouge Bleu |
+| Bleu       | Classic Cortez Nylon Obsidian White          |
+| Bleu       | Southampton Bleu                             |
+| Bleu       | Star Player Ev Canvas Ox M Marine Blanc      |
+| Bleu       | Suede Classic+ Peacoat White                 |
+| Bleu clair | NULL                                         |
+| Gris       | Gazelle W Gris Blanc                         |
+| Jaune      | NULL                                         |
+| Marron     | Benino Gold                                  |
+| Marron     | Nastie Bruciato                              |
+| Marron     | Rilmot                                       |
+| Marron     | Satingh Brown                                |
+| Marron     | Stall Brown                                  |
+| Noir       | Benino Black                                 |
+| Noir       | Calla Rose Black                             |
+| Noir       | Inof Vaqueta Noir                            |
+| Noir       | Ipona Noir                                   |
+| Noir       | Petunia Noir                                 |
+| Noir       | Stan Smith Noir                              |
+| Noir       | Suede Hyper Embelished Wn's Black White      |
+| Noir       | Un Reisel Mara Black Leather                 |
+| Orange     | NULL                                         |
+| Rose       | Gazelle W Rose Blanc                         |
+| Rose       | W996 Light Cashmere                          |
+| Rouge      | Kaylin Alba Burgundy                         |
+| Vert       | NULL                                         |
+| Violet     | NULL                                         |
++------------+----------------------------------------------+
+*/
+
+
+/* Selection de tous les produits (name) avec ou sans couleurs (name) avec affichage du nom de produit et de la couleur, si existe sinon null,
+table principale Product et liées Color, left join
+classée par produit et couleur */
+
+select p.name as Produit, co.name as Couleur from product as p left join color as co on color_id=co.id order by Produit, Couleur;
+
+/*
++----------------------------------------------+---------+
+| Produit                                      | Couleur |
++----------------------------------------------+---------+
+| All Star Dainty Canvas Ox W Blanc Optical    | Blanc   |
+| Benino Black                                 | Noir    |
+| Benino Gold                                  | Marron  |
+| Calla Rose Black                             | Noir    |
+| Chuck Taylor All Star Hi M Blanc Optical     | Blanc   |
+| Classic Cortez Nylon Obsidian White          | Bleu    |
+| Gazelle W Gris Blanc                         | Gris    |
+| Gazelle W Rose Blanc                         | Rose    |
+| Inof Vaqueta Noir                            | Noir    |
+| Ipona Noir                                   | Noir    |
+| Kaylin Alba Burgundy                         | Rouge   |
+| Nastie Bruciato                              | Marron  |
+| Petunia Noir                                 | Noir    |
+| Rilmot                                       | Marron  |
+| Satingh Brown                                | Marron  |
+| Southampton Bleu                             | Bleu    |
+| Stall Brown                                  | Marron  |
+| Stan Smith Blanc Vert                        | Blanc   |
+| Stan Smith Noir                              | Noir    |
+| Star Player Ev Canvas Ox M Marine Blanc      | Bleu    |
+| Suede Classic+ Peacoat White                 | Bleu    |
+| Suede Hyper Embelished Wn's Black White      | Noir    |
+| Superstar Blanc Noir                         | Blanc   |
+| Superstar W Blanc Noir                       | Blanc   |
+| Suttino Beige                                | Beige   |
+| Un Reisel Mara Black Leather                 | Noir    |
+| W996 Light Cashmere                          | Rose    |
+| Wmns Air Huarache Run White White            | Blanc   |
+| Wmns Classic Cortez Leather Blanc Rouge Bleu | Blanc   |
++----------------------------------------------+---------+
+*/
+
+
+
 /* Selection des produits avec affichage des marques, catégories, couleurs, prix et genre
 table principale Product et liées Marque, Category et Color
 classée par Marque, Categorie, couleur et produit */
 
 select p.id as ID_Prod, b.name as Marque, ca.name as Categorie, p.name as Produit, co.name as Couleur, p.price as Prix, p.gender as Genre from product as p inner join category as ca on category_id=ca.id inner join brand as b on brand_id = b.id inner join color as co on color_id=co.id order by Marque, Categorie, Produit;
 
-/* 
+/*
 +---------+---------------------+----------------------+----------------------------------------------+---------+--------+-------+
 | ID_Prod | Marque              | Categorie            | Produit                                      | Couleur | Prix   | Genre |
 +---------+---------------------+----------------------+----------------------------------------------+---------+--------+-------+
@@ -38,6 +130,96 @@ select p.id as ID_Prod, b.name as Marque, ca.name as Categorie, p.name as Produi
 |      20 | Puma                | Baskets              | Suede Classic+ Peacoat White                 | Bleu    |  80.00 | H     |
 |      15 | Puma                | Baskets              | Suede Hyper Embelished Wn's Black White      | Noir    |  90.00 | F     |
 +---------+---------------------+----------------------+----------------------------------------------+---------+--------+-------+
+*/
+
+
+/* Selection des produits par genre (F ou H), marques, prix et genre
+table principale Product et liées Marque
+classée par Genre, Marque, catégorie et produit */
+
+select p.gender as Genre, p.id as ID_Prod, b.name as Marque, ca.name as Categorie, p.name as Produit, co.name as Couleur, p.price as Prix from product as p inner join category as ca on category_id=ca.id inner join brand as b on brand_id = b.id inner join color as co on color_id=co.id order by Genre, Marque, Categorie, Produit;
+
+/*
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
+| Genre | ID_Prod | Marque              | Categorie            | Produit                                      | Couleur | Prix   |
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
+| F     |      11 | Adidas              | Baskets              | Gazelle W Gris Blanc                         | Gris    |  94.99 |
+| F     |       4 | Adidas              | Baskets              | Gazelle W Rose Blanc                         | Rose    |  99.99 |
+| F     |       2 | Adidas              | Baskets              | Superstar W Blanc Noir                       | Blanc   |  99.99 |
+| F     |       7 | Clarks              | Escarpins            | Calla Rose Black                             | Noir    |  99.95 |
+| F     |       6 | Clarks              | Escarpins            | Kaylin Alba Burgundy                         | Rouge   |  99.95 |
+| F     |      14 | Clarks Unstructured | Sandales et nu-pieds | Un Reisel Mara Black Leather                 | Noir    |  89.99 |
+| F     |       1 | Converse            | Baskets              | All Star Dainty Canvas Ox W Blanc Optical    | Blanc   |  52.00 |
+| F     |      12 | Georgia Rose        | Sandales et nu-pieds | Inof Vaqueta Noir                            | Noir    |  89.00 |
+| F     |      13 | Georgia Rose        | Sandales et nu-pieds | Ipona Noir                                   | Noir    |  59.00 |
+| F     |      16 | I Love Shoes        | Sandales et nu-pieds | Benino Black                                 | Noir    |  39.00 |
+| F     |       9 | I Love Shoes        | Sandales et nu-pieds | Benino Gold                                  | Marron  |  39.00 |
+| F     |       8 | Les P'tites Bombes  | Sandales et nu-pieds | Petunia Noir                                 | Noir    |  29.90 |
+| F     |      10 | New Balance         | Baskets              | W996 Light Cashmere                          | Rose    |  70.00 |
+| F     |       3 | Nike                | Baskets              | Wmns Air Huarache Run White White            | Blanc   | 119.99 |
+| F     |       5 | Nike                | Baskets              | Wmns Classic Cortez Leather Blanc Rouge Bleu | Blanc   |  85.00 |
+| F     |      15 | Puma                | Baskets              | Suede Hyper Embelished Wn's Black White      | Noir    |  90.00 |
+| H     |      18 | Adidas              | Baskets              | Stan Smith Blanc Vert                        | Blanc   |  81.00 |
+| H     |      17 | Adidas              | Baskets              | Stan Smith Noir                              | Noir    |  94.99 |
+| H     |      19 | Adidas              | Baskets              | Superstar Blanc Noir                         | Blanc   |  99.99 |
+| H     |      22 | Converse            | Baskets              | Star Player Ev Canvas Ox M Marine Blanc      | Bleu    |  58.50 |
+| H     |      24 | Marvin&Co           | Chaussures à lacets  | Satingh Brown                                | Marron  |  79.00 |
+| H     |      26 | Marvin&Co           | Chaussures à lacets  | Suttino Beige                                | Beige   |  79.00 |
+| H     |      27 | Mr SARENZA          | Chaussures à lacets  | Nastie Bruciato                              | Marron  | 149.00 |
+| H     |      29 | Mr SARENZA          | Chaussures à lacets  | Rilmot                                       | Marron  |  99.00 |
+| H     |      25 | Mr SARENZA          | Chaussures à lacets  | Southampton Bleu                             | Bleu    | 109.00 |
+| H     |      28 | Mr SARENZA          | Chaussures à lacets  | Stall Brown                                  | Marron  | 119.00 |
+| H     |      23 | Nike                | Baskets              | Classic Cortez Nylon Obsidian White          | Bleu    |  80.00 |
+| H     |      20 | Puma                | Baskets              | Suede Classic+ Peacoat White                 | Bleu    |  80.00 |
+| M     |      21 | Converse            | Baskets              | Chuck Taylor All Star Hi M Blanc Optical     | Blanc   |  69.99 |
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
+*/
+
+
+/* Selection des produits par genre (F ou H), marques, prix et genre
+table principale Product et liées Marque
+classée par Genre, Marque, catégorie et produit */
+
+select case p.gender
+when "F" then "Femme"
+else "Homme"
+end as Genre, p.id as ID_Prod, b.name as Marque, ca.name as Categorie, p.name as Produit, co.name as Couleur, p.price as Prix from product as p inner join category as ca on category_id=ca.id inner join brand as b on brand_id = b.id inner join color as co on color_id=co.id order by Genre, Marque, Categorie, Produit;
+
+
+/*
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
+| Genre | ID_Prod | Marque              | Categorie            | Produit                                      | Couleur | Prix   |
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
+| Femme |      11 | Adidas              | Baskets              | Gazelle W Gris Blanc                         | Gris    |  94.99 |
+| Femme |       4 | Adidas              | Baskets              | Gazelle W Rose Blanc                         | Rose    |  99.99 |
+| Femme |       2 | Adidas              | Baskets              | Superstar W Blanc Noir                       | Blanc   |  99.99 |
+| Femme |       7 | Clarks              | Escarpins            | Calla Rose Black                             | Noir    |  99.95 |
+| Femme |       6 | Clarks              | Escarpins            | Kaylin Alba Burgundy                         | Rouge   |  99.95 |
+| Femme |      14 | Clarks Unstructured | Sandales et nu-pieds | Un Reisel Mara Black Leather                 | Noir    |  89.99 |
+| Femme |       1 | Converse            | Baskets              | All Star Dainty Canvas Ox W Blanc Optical    | Blanc   |  52.00 |
+| Femme |      12 | Georgia Rose        | Sandales et nu-pieds | Inof Vaqueta Noir                            | Noir    |  89.00 |
+| Femme |      13 | Georgia Rose        | Sandales et nu-pieds | Ipona Noir                                   | Noir    |  59.00 |
+| Femme |      16 | I Love Shoes        | Sandales et nu-pieds | Benino Black                                 | Noir    |  39.00 |
+| Femme |       9 | I Love Shoes        | Sandales et nu-pieds | Benino Gold                                  | Marron  |  39.00 |
+| Femme |       8 | Les P'tites Bombes  | Sandales et nu-pieds | Petunia Noir                                 | Noir    |  29.90 |
+| Femme |      10 | New Balance         | Baskets              | W996 Light Cashmere                          | Rose    |  70.00 |
+| Femme |       3 | Nike                | Baskets              | Wmns Air Huarache Run White White            | Blanc   | 119.99 |
+| Femme |       5 | Nike                | Baskets              | Wmns Classic Cortez Leather Blanc Rouge Bleu | Blanc   |  85.00 |
+| Femme |      15 | Puma                | Baskets              | Suede Hyper Embelished Wn's Black White      | Noir    |  90.00 |
+| Homme |      18 | Adidas              | Baskets              | Stan Smith Blanc Vert                        | Blanc   |  81.00 |
+| Homme |      17 | Adidas              | Baskets              | Stan Smith Noir                              | Noir    |  94.99 |
+| Homme |      19 | Adidas              | Baskets              | Superstar Blanc Noir                         | Blanc   |  99.99 |
+| Homme |      21 | Converse            | Baskets              | Chuck Taylor All Star Hi M Blanc Optical     | Blanc   |  69.99 |
+| Homme |      22 | Converse            | Baskets              | Star Player Ev Canvas Ox M Marine Blanc      | Bleu    |  58.50 |
+| Homme |      24 | Marvin&Co           | Chaussures à lacets  | Satingh Brown                                | Marron  |  79.00 |
+| Homme |      26 | Marvin&Co           | Chaussures à lacets  | Suttino Beige                                | Beige   |  79.00 |
+| Homme |      27 | Mr SARENZA          | Chaussures à lacets  | Nastie Bruciato                              | Marron  | 149.00 |
+| Homme |      29 | Mr SARENZA          | Chaussures à lacets  | Rilmot                                       | Marron  |  99.00 |
+| Homme |      25 | Mr SARENZA          | Chaussures à lacets  | Southampton Bleu                             | Bleu    | 109.00 |
+| Homme |      28 | Mr SARENZA          | Chaussures à lacets  | Stall Brown                                  | Marron  | 119.00 |
+| Homme |      23 | Nike                | Baskets              | Classic Cortez Nylon Obsidian White          | Bleu    |  80.00 |
+| Homme |      20 | Puma                | Baskets              | Suede Classic+ Peacoat White                 | Bleu    |  80.00 |
++-------+---------+---------------------+----------------------+----------------------------------------------+---------+--------+
 */
 
 
@@ -255,7 +437,7 @@ mysql> describe size;
 +-------+------------------+------+-----+---------+----------------+
 
 
-Affichage des quantités en stock par produit*/
+Affichage des quantités en stock par produit et par taille*/
 select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Stock, p.price as Prix from product as p inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id order by Produit, Taille;
 
 /* 392 lignes produits
@@ -657,8 +839,452 @@ select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Sto
 +---------+----------------------------------------------+--------+----------+--------+
 */
 
+/*Affichage des quantités en stock par produit et pour toutes les tailles (même si certains produits n'existent pas pour certaines tailles (right))*/
+
+select si.name as Taille, p.name as Produit, sum(st.stock) as Qt_Stock from product as p left join stock as st on p.id= st.product_id left join size as si on st.size_id = si.id group by Taille, Produit order by Taille, Produit;
+
+/*
++--------+----------------------------------------------+----------+
+| Taille | Produit                                      | Qt_Stock |
++--------+----------------------------------------------+----------+
+| 35     | Gazelle W Rose Blanc                         |        6 |
+| 35     | Inof Vaqueta Noir                            |        6 |
+| 35     | Kaylin Alba Burgundy                         |       10 |
+| 35     | Petunia Noir                                 |        3 |
+| 35     | Suede Hyper Embelished Wn's Black White      |        5 |
+| 35     | Superstar W Blanc Noir                       |        5 |
+| 35     | Un Reisel Mara Black Leather                 |        2 |
+| 35     | W996 Light Cashmere                          |       10 |
+| 35     | Wmns Air Huarache Run White White            |        0 |
+| 35     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        7 |
+| 35 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        2 |
+| 35 1/2 | Benino Gold                                  |        0 |
+| 35 1/2 | Calla Rose Black                             |        3 |
+| 35 1/2 | Gazelle W Gris Blanc                         |        8 |
+| 35 1/2 | Gazelle W Rose Blanc                         |        7 |
+| 35 1/2 | Inof Vaqueta Noir                            |        7 |
+| 35 1/2 | Ipona Noir                                   |        6 |
+| 35 1/2 | Kaylin Alba Burgundy                         |        2 |
+| 35 1/2 | Petunia Noir                                 |        0 |
+| 35 1/2 | Suede Hyper Embelished Wn's Black White      |        0 |
+| 35 1/2 | Un Reisel Mara Black Leather                 |        3 |
+| 35 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        7 |
+| 36     | All Star Dainty Canvas Ox W Blanc Optical    |        8 |
+| 36     | Benino Black                                 |        8 |
+| 36     | Benino Gold                                  |        2 |
+| 36     | Calla Rose Black                             |        2 |
+| 36     | Gazelle W Gris Blanc                         |        5 |
+| 36     | Inof Vaqueta Noir                            |        8 |
+| 36     | Ipona Noir                                   |        9 |
+| 36     | Kaylin Alba Burgundy                         |        5 |
+| 36     | Petunia Noir                                 |        9 |
+| 36     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        5 |
+| 36 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        0 |
+| 36 1/2 | Benino Gold                                  |        8 |
+| 36 1/2 | Calla Rose Black                             |        5 |
+| 36 1/2 | Gazelle W Gris Blanc                         |        4 |
+| 36 1/2 | Gazelle W Rose Blanc                         |        8 |
+| 36 1/2 | Ipona Noir                                   |        8 |
+| 36 1/2 | Kaylin Alba Burgundy                         |        2 |
+| 36 1/2 | Petunia Noir                                 |        7 |
+| 36 1/2 | Suede Hyper Embelished Wn's Black White      |        2 |
+| 36 1/2 | Un Reisel Mara Black Leather                 |        9 |
+| 36 1/2 | W996 Light Cashmere                          |        8 |
+| 36 1/2 | Wmns Air Huarache Run White White            |        1 |
+| 36 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        5 |
+| 37     | All Star Dainty Canvas Ox W Blanc Optical    |        9 |
+| 37     | Calla Rose Black                             |        5 |
+| 37     | Inof Vaqueta Noir                            |        4 |
+| 37     | Kaylin Alba Burgundy                         |        3 |
+| 37     | Petunia Noir                                 |        3 |
+| 37     | Suede Hyper Embelished Wn's Black White      |        2 |
+| 37     | Superstar W Blanc Noir                       |        7 |
+| 37     | Un Reisel Mara Black Leather                 |        5 |
+| 37     | W996 Light Cashmere                          |        8 |
+| 37     | Wmns Air Huarache Run White White            |        9 |
+| 37     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        3 |
+| 37 1/2 | Benino Black                                 |        7 |
+| 37 1/2 | Benino Gold                                  |        3 |
+| 37 1/2 | Calla Rose Black                             |        6 |
+| 37 1/2 | Gazelle W Rose Blanc                         |       10 |
+| 37 1/2 | Kaylin Alba Burgundy                         |        7 |
+| 37 1/2 | Suede Hyper Embelished Wn's Black White      |        0 |
+| 37 1/2 | Superstar W Blanc Noir                       |        4 |
+| 37 1/2 | Un Reisel Mara Black Leather                 |        9 |
+| 37 1/2 | W996 Light Cashmere                          |        0 |
+| 37 1/2 | Wmns Air Huarache Run White White            |        7 |
+| 37 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        5 |
+| 38     | All Star Dainty Canvas Ox W Blanc Optical    |        4 |
+| 38     | Benino Black                                 |        3 |
+| 38     | Calla Rose Black                             |        0 |
+| 38     | Classic Cortez Nylon Obsidian White          |        3 |
+| 38     | Inof Vaqueta Noir                            |        9 |
+| 38     | Ipona Noir                                   |        2 |
+| 38     | Kaylin Alba Burgundy                         |        9 |
+| 38     | Nastie Bruciato                              |        9 |
+| 38     | Rilmot                                       |        3 |
+| 38     | Satingh Brown                                |       10 |
+| 38     | Southampton Bleu                             |        6 |
+| 38     | Stan Smith Noir                              |        9 |
+| 38     | Suede Classic+ Peacoat White                 |        4 |
+| 38     | Suede Hyper Embelished Wn's Black White      |        3 |
+| 38     | Superstar W Blanc Noir                       |        0 |
+| 38     | Suttino Beige                                |        3 |
+| 38     | Un Reisel Mara Black Leather                 |        8 |
+| 38     | W996 Light Cashmere                          |        3 |
+| 38     | Wmns Air Huarache Run White White            |        1 |
+| 38     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        6 |
+| 38 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        8 |
+| 38 1/2 | Benino Gold                                  |        9 |
+| 38 1/2 | Calla Rose Black                             |        6 |
+| 38 1/2 | Classic Cortez Nylon Obsidian White          |        8 |
+| 38 1/2 | Gazelle W Gris Blanc                         |        3 |
+| 38 1/2 | Gazelle W Rose Blanc                         |        5 |
+| 38 1/2 | Inof Vaqueta Noir                            |        2 |
+| 38 1/2 | Ipona Noir                                   |        4 |
+| 38 1/2 | Kaylin Alba Burgundy                         |       10 |
+| 38 1/2 | Nastie Bruciato                              |        0 |
+| 38 1/2 | Rilmot                                       |        1 |
+| 38 1/2 | Satingh Brown                                |        5 |
+| 38 1/2 | Stall Brown                                  |        8 |
+| 38 1/2 | Stan Smith Blanc Vert                        |       10 |
+| 38 1/2 | Stan Smith Noir                              |       10 |
+| 38 1/2 | Suede Classic+ Peacoat White                 |        5 |
+| 38 1/2 | Suede Hyper Embelished Wn's Black White      |        5 |
+| 38 1/2 | Superstar W Blanc Noir                       |        3 |
+| 38 1/2 | Suttino Beige                                |        8 |
+| 38 1/2 | W996 Light Cashmere                          |        0 |
+| 38 1/2 | Wmns Air Huarache Run White White            |        7 |
+| 38 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        9 |
+| 39     | Benino Black                                 |        6 |
+| 39     | Benino Gold                                  |        9 |
+| 39     | Calla Rose Black                             |        2 |
+| 39     | Chuck Taylor All Star Hi M Blanc Optical     |        1 |
+| 39     | Classic Cortez Nylon Obsidian White          |        3 |
+| 39     | Gazelle W Rose Blanc                         |        5 |
+| 39     | Inof Vaqueta Noir                            |        9 |
+| 39     | Ipona Noir                                   |        3 |
+| 39     | Kaylin Alba Burgundy                         |        5 |
+| 39     | Nastie Bruciato                              |        5 |
+| 39     | Petunia Noir                                 |        2 |
+| 39     | Stall Brown                                  |        0 |
+| 39     | Stan Smith Blanc Vert                        |        5 |
+| 39     | Stan Smith Noir                              |        7 |
+| 39     | Star Player Ev Canvas Ox M Marine Blanc      |        1 |
+| 39     | Suede Classic+ Peacoat White                 |        9 |
+| 39     | Suede Hyper Embelished Wn's Black White      |        2 |
+| 39     | Superstar Blanc Noir                         |        4 |
+| 39     | Superstar W Blanc Noir                       |        9 |
+| 39     | Un Reisel Mara Black Leather                 |        3 |
+| 39     | W996 Light Cashmere                          |       10 |
+| 39     | Wmns Air Huarache Run White White            |        9 |
+| 39     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        8 |
+| 39 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 39 1/2 | Benino Black                                 |        4 |
+| 39 1/2 | Benino Gold                                  |        9 |
+| 39 1/2 | Gazelle W Gris Blanc                         |       10 |
+| 39 1/2 | Gazelle W Rose Blanc                         |        3 |
+| 39 1/2 | Inof Vaqueta Noir                            |        2 |
+| 39 1/2 | Ipona Noir                                   |       10 |
+| 39 1/2 | Kaylin Alba Burgundy                         |       10 |
+| 39 1/2 | Nastie Bruciato                              |        9 |
+| 39 1/2 | Petunia Noir                                 |        0 |
+| 39 1/2 | Rilmot                                       |       10 |
+| 39 1/2 | Satingh Brown                                |        2 |
+| 39 1/2 | Stall Brown                                  |        6 |
+| 39 1/2 | Stan Smith Blanc Vert                        |        1 |
+| 39 1/2 | Stan Smith Noir                              |        3 |
+| 39 1/2 | Star Player Ev Canvas Ox M Marine Blanc      |        8 |
+| 39 1/2 | Suede Classic+ Peacoat White                 |        3 |
+| 39 1/2 | Suede Hyper Embelished Wn's Black White      |       10 |
+| 39 1/2 | Superstar Blanc Noir                         |        2 |
+| 39 1/2 | Superstar W Blanc Noir                       |        8 |
+| 39 1/2 | Suttino Beige                                |       10 |
+| 39 1/2 | Un Reisel Mara Black Leather                 |        3 |
+| 39 1/2 | W996 Light Cashmere                          |        7 |
+| 39 1/2 | Wmns Air Huarache Run White White            |       10 |
+| 40     | All Star Dainty Canvas Ox W Blanc Optical    |       10 |
+| 40     | Benino Black                                 |        5 |
+| 40     | Benino Gold                                  |        2 |
+| 40     | Chuck Taylor All Star Hi M Blanc Optical     |       10 |
+| 40     | Gazelle W Gris Blanc                         |        2 |
+| 40     | Gazelle W Rose Blanc                         |        2 |
+| 40     | Inof Vaqueta Noir                            |        4 |
+| 40     | Ipona Noir                                   |        0 |
+| 40     | Kaylin Alba Burgundy                         |        7 |
+| 40     | Petunia Noir                                 |        2 |
+| 40     | Rilmot                                       |        9 |
+| 40     | Satingh Brown                                |        0 |
+| 40     | Stall Brown                                  |        5 |
+| 40     | Stan Smith Blanc Vert                        |        6 |
+| 40     | Stan Smith Noir                              |        5 |
+| 40     | Suede Classic+ Peacoat White                 |        4 |
+| 40     | Suede Hyper Embelished Wn's Black White      |        6 |
+| 40     | Superstar W Blanc Noir                       |        3 |
+| 40     | Suttino Beige                                |        9 |
+| 40     | Un Reisel Mara Black Leather                 |        8 |
+| 40 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        8 |
+| 40 1/2 | Benino Black                                 |        5 |
+| 40 1/2 | Benino Gold                                  |        1 |
+| 40 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        4 |
+| 40 1/2 | Classic Cortez Nylon Obsidian White          |        7 |
+| 40 1/2 | Gazelle W Gris Blanc                         |        6 |
+| 40 1/2 | Gazelle W Rose Blanc                         |        9 |
+| 40 1/2 | Inof Vaqueta Noir                            |        3 |
+| 40 1/2 | Ipona Noir                                   |        4 |
+| 40 1/2 | Petunia Noir                                 |        0 |
+| 40 1/2 | Rilmot                                       |        8 |
+| 40 1/2 | Satingh Brown                                |        0 |
+| 40 1/2 | Southampton Bleu                             |        6 |
+| 40 1/2 | Stall Brown                                  |        7 |
+| 40 1/2 | Stan Smith Blanc Vert                        |        3 |
+| 40 1/2 | Stan Smith Noir                              |       10 |
+| 40 1/2 | Suede Hyper Embelished Wn's Black White      |        3 |
+| 40 1/2 | Superstar Blanc Noir                         |        2 |
+| 40 1/2 | Superstar W Blanc Noir                       |        8 |
+| 40 1/2 | Suttino Beige                                |        6 |
+| 40 1/2 | Un Reisel Mara Black Leather                 |        4 |
+| 40 1/2 | Wmns Air Huarache Run White White            |        7 |
+| 40 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        1 |
+| 41     | All Star Dainty Canvas Ox W Blanc Optical    |        0 |
+| 41     | Benino Black                                 |        9 |
+| 41     | Calla Rose Black                             |        8 |
+| 41     | Chuck Taylor All Star Hi M Blanc Optical     |        2 |
+| 41     | Classic Cortez Nylon Obsidian White          |        1 |
+| 41     | Inof Vaqueta Noir                            |        5 |
+| 41     | Ipona Noir                                   |        8 |
+| 41     | Kaylin Alba Burgundy                         |        1 |
+| 41     | Nastie Bruciato                              |       10 |
+| 41     | Petunia Noir                                 |        8 |
+| 41     | Rilmot                                       |        8 |
+| 41     | Satingh Brown                                |        6 |
+| 41     | Southampton Bleu                             |        3 |
+| 41     | Stan Smith Noir                              |       10 |
+| 41     | Star Player Ev Canvas Ox M Marine Blanc      |        1 |
+| 41     | Suede Classic+ Peacoat White                 |        1 |
+| 41     | Suede Hyper Embelished Wn's Black White      |        1 |
+| 41     | Superstar W Blanc Noir                       |       10 |
+| 41     | Suttino Beige                                |        8 |
+| 41     | W996 Light Cashmere                          |        1 |
+| 41 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 41 1/2 | Benino Gold                                  |        1 |
+| 41 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        7 |
+| 41 1/2 | Classic Cortez Nylon Obsidian White          |        8 |
+| 41 1/2 | Gazelle W Gris Blanc                         |        7 |
+| 41 1/2 | Inof Vaqueta Noir                            |        4 |
+| 41 1/2 | Ipona Noir                                   |        4 |
+| 41 1/2 | Rilmot                                       |        0 |
+| 41 1/2 | Satingh Brown                                |        1 |
+| 41 1/2 | Southampton Bleu                             |        8 |
+| 41 1/2 | Stall Brown                                  |        1 |
+| 41 1/2 | Stan Smith Blanc Vert                        |        5 |
+| 41 1/2 | Stan Smith Noir                              |        6 |
+| 41 1/2 | Star Player Ev Canvas Ox M Marine Blanc      |        5 |
+| 41 1/2 | Suede Classic+ Peacoat White                 |        3 |
+| 41 1/2 | Superstar Blanc Noir                         |        5 |
+| 41 1/2 | Superstar W Blanc Noir                       |       10 |
+| 41 1/2 | Suttino Beige                                |        2 |
+| 41 1/2 | Wmns Air Huarache Run White White            |        2 |
+| 41 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        6 |
+| 42     | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 42     | Benino Black                                 |        8 |
+| 42     | Benino Gold                                  |        0 |
+| 42     | Gazelle W Gris Blanc                         |       10 |
+| 42     | Gazelle W Rose Blanc                         |        6 |
+| 42     | Inof Vaqueta Noir                            |        9 |
+| 42     | Ipona Noir                                   |        9 |
+| 42     | Kaylin Alba Burgundy                         |        6 |
+| 42     | Nastie Bruciato                              |        4 |
+| 42     | Petunia Noir                                 |        8 |
+| 42     | Rilmot                                       |        7 |
+| 42     | Satingh Brown                                |        7 |
+| 42     | Southampton Bleu                             |        0 |
+| 42     | Stall Brown                                  |        0 |
+| 42     | Stan Smith Blanc Vert                        |        1 |
+| 42     | Stan Smith Noir                              |       10 |
+| 42     | Suede Classic+ Peacoat White                 |       10 |
+| 42     | Superstar W Blanc Noir                       |        8 |
+| 42     | Wmns Air Huarache Run White White            |        4 |
+| 42     | Wmns Classic Cortez Leather Blanc Rouge Bleu |        3 |
+| 42 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        3 |
+| 42 1/2 | Benino Gold                                  |        8 |
+| 42 1/2 | Calla Rose Black                             |        1 |
+| 42 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        4 |
+| 42 1/2 | Classic Cortez Nylon Obsidian White          |        7 |
+| 42 1/2 | Gazelle W Gris Blanc                         |        0 |
+| 42 1/2 | Gazelle W Rose Blanc                         |        8 |
+| 42 1/2 | Petunia Noir                                 |        4 |
+| 42 1/2 | Rilmot                                       |        6 |
+| 42 1/2 | Satingh Brown                                |        4 |
+| 42 1/2 | Southampton Bleu                             |        8 |
+| 42 1/2 | Stall Brown                                  |        1 |
+| 42 1/2 | Stan Smith Noir                              |        8 |
+| 42 1/2 | Suede Classic+ Peacoat White                 |        3 |
+| 42 1/2 | Suede Hyper Embelished Wn's Black White      |        0 |
+| 42 1/2 | Suttino Beige                                |       10 |
+| 42 1/2 | W996 Light Cashmere                          |        9 |
+| 42 1/2 | Wmns Air Huarache Run White White            |        7 |
+| 42 1/2 | Wmns Classic Cortez Leather Blanc Rouge Bleu |        3 |
+| 43     | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 43     | Chuck Taylor All Star Hi M Blanc Optical     |        9 |
+| 43     | Classic Cortez Nylon Obsidian White          |        5 |
+| 43     | Nastie Bruciato                              |        8 |
+| 43     | Rilmot                                       |        2 |
+| 43     | Satingh Brown                                |        8 |
+| 43     | Southampton Bleu                             |        6 |
+| 43     | Stall Brown                                  |        0 |
+| 43     | Stan Smith Noir                              |        7 |
+| 43     | Star Player Ev Canvas Ox M Marine Blanc      |        9 |
+| 43     | Suede Classic+ Peacoat White                 |        6 |
+| 43     | Superstar Blanc Noir                         |        4 |
+| 43     | Suttino Beige                                |        0 |
+| 43 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 43 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        4 |
+| 43 1/2 | Classic Cortez Nylon Obsidian White          |        2 |
+| 43 1/2 | Rilmot                                       |        9 |
+| 43 1/2 | Satingh Brown                                |        3 |
+| 43 1/2 | Southampton Bleu                             |        4 |
+| 43 1/2 | Stall Brown                                  |        0 |
+| 43 1/2 | Stan Smith Blanc Vert                        |        5 |
+| 43 1/2 | Stan Smith Noir                              |       10 |
+| 43 1/2 | Star Player Ev Canvas Ox M Marine Blanc      |        7 |
+| 43 1/2 | Suede Classic+ Peacoat White                 |        8 |
+| 43 1/2 | Superstar Blanc Noir                         |        9 |
+| 43 1/2 | Suttino Beige                                |        6 |
+| 44     | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 44     | Chuck Taylor All Star Hi M Blanc Optical     |        1 |
+| 44     | Nastie Bruciato                              |        4 |
+| 44     | Rilmot                                       |        0 |
+| 44     | Satingh Brown                                |        3 |
+| 44     | Stall Brown                                  |        2 |
+| 44     | Stan Smith Blanc Vert                        |        0 |
+| 44     | Stan Smith Noir                              |        6 |
+| 44     | Star Player Ev Canvas Ox M Marine Blanc      |        4 |
+| 44     | Superstar Blanc Noir                         |        5 |
+| 44     | Suttino Beige                                |        2 |
+| 44 1/2 | All Star Dainty Canvas Ox W Blanc Optical    |        5 |
+| 44 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        1 |
+| 44 1/2 | Satingh Brown                                |        2 |
+| 44 1/2 | Southampton Bleu                             |        1 |
+| 44 1/2 | Stall Brown                                  |        3 |
+| 44 1/2 | Stan Smith Blanc Vert                        |        7 |
+| 44 1/2 | Stan Smith Noir                              |        9 |
+| 44 1/2 | Star Player Ev Canvas Ox M Marine Blanc      |        5 |
+| 44 1/2 | Superstar Blanc Noir                         |        5 |
+| 44 1/2 | Suttino Beige                                |        8 |
+| 45     | All Star Dainty Canvas Ox W Blanc Optical    |        7 |
+| 45     | Chuck Taylor All Star Hi M Blanc Optical     |        7 |
+| 45     | Classic Cortez Nylon Obsidian White          |        7 |
+| 45     | Nastie Bruciato                              |       10 |
+| 45     | Rilmot                                       |        7 |
+| 45     | Southampton Bleu                             |        4 |
+| 45     | Star Player Ev Canvas Ox M Marine Blanc      |        7 |
+| 45     | Suede Classic+ Peacoat White                 |        2 |
+| 45     | Superstar Blanc Noir                         |        9 |
+| 45     | Suttino Beige                                |        4 |
+| 45 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        9 |
+| 45 1/2 | Classic Cortez Nylon Obsidian White          |        0 |
+| 45 1/2 | Nastie Bruciato                              |        2 |
+| 45 1/2 | Rilmot                                       |        9 |
+| 45 1/2 | Satingh Brown                                |        4 |
+| 45 1/2 | Southampton Bleu                             |        1 |
+| 45 1/2 | Stall Brown                                  |        5 |
+| 45 1/2 | Suede Classic+ Peacoat White                 |       10 |
+| 45 1/2 | Superstar Blanc Noir                         |        9 |
+| 45 1/2 | Suttino Beige                                |        3 |
+| 46     | Classic Cortez Nylon Obsidian White          |        3 |
+| 46     | Nastie Bruciato                              |        9 |
+| 46     | Rilmot                                       |        4 |
+| 46     | Satingh Brown                                |        1 |
+| 46     | Stall Brown                                  |        1 |
+| 46     | Stan Smith Blanc Vert                        |        8 |
+| 46     | Stan Smith Noir                              |        3 |
+| 46     | Star Player Ev Canvas Ox M Marine Blanc      |        2 |
+| 46     | Suede Classic+ Peacoat White                 |        0 |
+| 46     | Suttino Beige                                |        4 |
+| 46 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        2 |
+| 46 1/2 | Classic Cortez Nylon Obsidian White          |        6 |
+| 46 1/2 | Nastie Bruciato                              |        0 |
+| 46 1/2 | Rilmot                                       |        4 |
+| 46 1/2 | Satingh Brown                                |        1 |
+| 46 1/2 | Southampton Bleu                             |        6 |
+| 46 1/2 | Stall Brown                                  |        0 |
+| 46 1/2 | Superstar Blanc Noir                         |        2 |
+| 46 1/2 | Suttino Beige                                |        5 |
+| 47     | Classic Cortez Nylon Obsidian White          |        9 |
+| 47     | Nastie Bruciato                              |        2 |
+| 47     | Rilmot                                       |        2 |
+| 47     | Satingh Brown                                |        9 |
+| 47     | Southampton Bleu                             |        3 |
+| 47     | Stall Brown                                  |        3 |
+| 47     | Stan Smith Blanc Vert                        |        4 |
+| 47     | Stan Smith Noir                              |        7 |
+| 47     | Star Player Ev Canvas Ox M Marine Blanc      |        2 |
+| 47     | Suttino Beige                                |        6 |
+| 47 1/2 | Chuck Taylor All Star Hi M Blanc Optical     |        8 |
+| 47 1/2 | Classic Cortez Nylon Obsidian White          |        0 |
+| 47 1/2 | Nastie Bruciato                              |        6 |
+| 47 1/2 | Rilmot                                       |        1 |
+| 47 1/2 | Satingh Brown                                |        5 |
+| 47 1/2 | Southampton Bleu                             |        8 |
+| 47 1/2 | Stall Brown                                  |        7 |
+| 47 1/2 | Stan Smith Blanc Vert                        |        0 |
+| 47 1/2 | Stan Smith Noir                              |       10 |
+| 47 1/2 | Star Player Ev Canvas Ox M Marine Blanc      |        4 |
+| 47 1/2 | Suede Classic+ Peacoat White                 |        3 |
+| 47 1/2 | Superstar Blanc Noir                         |        7 |
+| 47 1/2 | Suttino Beige                                |        0 |
+| 48     | Chuck Taylor All Star Hi M Blanc Optical     |       10 |
+| 48     | Classic Cortez Nylon Obsidian White          |        7 |
+| 48     | Nastie Bruciato                              |        1 |
+| 48     | Satingh Brown                                |        2 |
+| 48     | Stan Smith Blanc Vert                        |        7 |
+| 48     | Stan Smith Noir                              |        3 |
+| 48     | Star Player Ev Canvas Ox M Marine Blanc      |       10 |
+| 48     | Suede Classic+ Peacoat White                 |        2 |
+| 48     | Superstar Blanc Noir                         |        6 |
+| 48     | Suttino Beige                                |        5 |
++--------+----------------------------------------------+----------+
+*/
+
+/*
+select si.name as Taille, sum(st.stock) as Qt_Stock from stock as st left join size as si on st.size_id = si.id group by Taille order by Taille;
++--------+----------+
+| Taille | Qt_Stock |
++--------+----------+
+| 35     |       54 |
+| 35 1/2 |       45 |
+| 36     |       61 |
+| 36 1/2 |       67 |
+| 37     |       58 |
+| 37 1/2 |       58 |
+| 38     |       95 |
+| 38 1/2 |      126 |
+| 39     |      117 |
+| 39 1/2 |      145 |
+| 40     |       99 |
+| 40 1/2 |      112 |
+| 41     |      101 |
+| 41 1/2 |       90 |
+| 42     |      115 |
+| 42 1/2 |       94 |
+| 43     |       69 |
+| 43 1/2 |       72 |
+| 44     |       32 |
+| 44 1/2 |       46 |
+| 45     |       64 |
+| 45 1/2 |       52 |
+| 46     |       35 |
+| 46 1/2 |       26 |
+| 47     |       47 |
+| 47 1/2 |       59 |
+| 48     |       53 |
++--------+----------+
+*/
+
+
 /*Affichage des quantités en stock par produit sans affichage des tailles avec somme des quantités */
-select p.id as ID_Prod, p.name as Produit, sum(st.stock) as Qt_Stock from product as p inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id group by ID_Prod, Produit order by Produit; 
+select p.id as ID_Prod, p.name as Produit, sum(st.stock) as Qt_Stock from product as p inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id group by ID_Prod, Produit order by Produit;
 /*
 +----------------------------------------------+----------+
 | Produit                                      | Qt_Stock |
@@ -774,6 +1400,8 @@ select b.name as Marque, p.id as ID_Prod, p.name as Produit, sum(st.stock) as Qt
 
 /* Marque stock */
 select b.name as Marque, sum(st.stock) as Qt_Stock, sum(st.stock * p.price) as ValeurStock from product as p inner join brand as b on brand_id = b.id inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id group by Marque order by Marque;
+
+select b.name as Marque, sum(st.stock) as Qt_Stock, sum(st.stock * p.price) as ValeurStock from product as p inner join brand as b on brand_id = b.id inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id where b.name="Adidas" group by Marque order by Marque;
 
 /*
 +---------------------+----------+-------------+
@@ -912,8 +1540,8 @@ select b.name as Marque, p.id as ID_Prod, p.name as Produit, sum(st.stock) as Qt
 29 rows in set (0.00 sec)*/
 
 /*Affichage des quantités en stock par produit avec case pour rupture de stock et qté restante 1 : 2 */
-select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Stock, 
-CASE st.stock 
+select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Stock,
+CASE st.stock
 when 0 then 'Rupture de stock pour cette taille'
 when 1 then 'Plus que 1 article restant !'
 when 2 then 'Plus que 2 articles restants !'
@@ -922,8 +1550,8 @@ end as Etat_Stock
 from product as p inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id order by Produit, Taille;
 
 /*
-select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Stock, 
-    -> CASE st.stock 
+select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Stock,
+    -> CASE st.stock
     -> when 0 then 'Rupture de stock'
     -> when 1 then 'Plus que 1 article restant !'
     -> when 2 then 'Plus que 2 articles restants !'
@@ -1331,13 +1959,13 @@ select p.id as ID_Prod, p.name as Produit, si.name as Taille, st.stock as Qt_Sto
 
 /* affichage stock avec marque, categorie et produit*/
 
-select b.name as Marque, ca.name as Categorie, co.name as Couleur, p.name as Produit, p.id as ID_Prod, p.gender as Genre, si.name as Taille, st.stock as Qt_Stock,  
-CASE st.stock  
-	when 0 then 'Rupture de stock' 
-	when 1 then 'Plus que 1 seul article disponible !' 
-	when 2 then 'Plus que 2 articles disponibles !' 
-	else 'article disponible' 
-	end as Etat_Stock 
+select b.name as Marque, ca.name as Categorie, co.name as Couleur, p.name as Produit, p.id as ID_Prod, p.gender as Genre, si.name as Taille, st.stock as Qt_Stock,
+CASE st.stock
+	when 0 then 'Rupture de stock'
+	when 1 then 'Plus que 1 seul article disponible !'
+	when 2 then 'Plus que 2 articles disponibles !'
+	else 'article disponible'
+	end as Etat_Stock
 from product as p inner join category as ca on category_id=ca.id inner join brand as b on brand_id = b.id inner join color as co on color_id=co.id inner join stock as st on p.id= st.product_id inner join size as si on st.size_id = si.id order by Marque, Categorie, Couleur, Produit, Taille;
 /*
 +---------------------+----------------------+---------+----------------------------------------------+---------+-------+--------+----------+--------------------------------------+
@@ -1737,6 +2365,3 @@ from product as p inner join category as ca on category_id=ca.id inner join bran
 | Puma                | Baskets              | Noir    | Suede Hyper Embelished Wn's Black White      |      15 | F     | 42 1/2 |        0 | Rupture de stock                     |
 +---------------------+----------------------+---------+----------------------------------------------+---------+-------+--------+----------+--------------------------------------+
 392 rows in set (0.01 sec)
-
-
-
